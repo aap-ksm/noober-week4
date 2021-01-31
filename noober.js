@@ -1,16 +1,9 @@
-async function pageLoaded() {
-  let response = await fetch('https://kiei451.com/api/rides.json')
-  let json = await response.json()
-
-  // writes the returned JSON to the console
-  console.dir(json)
-  // 🔥 start here: write code to loop through the rides
-  
+function renderRide(ride) {
   let outputElement = document.querySelector('.rides')
 
-  for (let i=0; i<json.length; i++) {
-    let trip = json[i]
-    let firstRider = json[i][0]
+  for (let i=0; i<ride.length; i++) {
+    let trip = ride[i]
+    let firstRider = ride[i][0]
     let levelOfService
     let borderColor
     if (trip.length > 1) {
@@ -38,11 +31,9 @@ async function pageLoaded() {
     </h1>
     `)
 
-
     for (let j=0; j<trip.length; j++) {
       let leg = trip[j]
         outputElement.insertAdjacentHTML('beforeend', `        
-
 
             <div class="border-4 border-${borderColor} p-4 my-4 text-left">
           <div class="flex">
@@ -68,14 +59,21 @@ async function pageLoaded() {
               <p>${leg.dropoffLocation.city}, ${leg.dropoffLocation.state} ${leg.dropoffLocation.zip}</p>
             </div>
           </div>
-        </div>
-          
-        `)
-         
+        </div> 
+        `)        
     }
-  } 
-}
+  }
+} 
 
+async function pageLoaded() {
+  let response = await fetch('https://kiei451.com/api/rides.json')
+  let json = await response.json()
+
+  // writes the returned JSON to the console
+  console.dir(json)
+  // 🔥 start here: write code to loop through the rides
+  renderRide(json)
+}
 
 window.addEventListener('DOMContentLoaded', pageLoaded)
 
