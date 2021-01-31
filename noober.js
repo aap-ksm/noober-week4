@@ -1,9 +1,7 @@
-function renderRide(ride) {
+function renderRide(trip) {
   let outputElement = document.querySelector('.rides')
-
-  for (let i=0; i<ride.length; i++) {
-    let trip = ride[i]
-    let firstRider = ride[i][0]
+    
+    let firstRider = trip[0]
     let levelOfService
     let borderColor
     if (trip.length > 1) {
@@ -62,7 +60,7 @@ function renderRide(ride) {
         </div> 
         `)        
     }
-  }
+  
 } 
 
 async function pageLoaded() {
@@ -72,7 +70,10 @@ async function pageLoaded() {
   // writes the returned JSON to the console
   console.dir(json)
   // 🔥 start here: write code to loop through the rides
-  renderRide(json)
+  for (let i=0; i<json.length; i++) {
+    let trip = json[i]
+    renderRide(trip)
+  }
 }
 
 window.addEventListener('DOMContentLoaded', pageLoaded)
